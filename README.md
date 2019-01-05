@@ -8,6 +8,7 @@ composer require pointdeb/translator
 ```
 
 # Usages
+## SaveToFile
 
 ```php
 
@@ -28,6 +29,42 @@ $outputPath = '/your/path/';
 foreach($datas as $key => $data) {
   $result = Translation::saveToFile($key, $data, $outputPath);
 }
+
+// result /your/path/en/home.php 
+/** 
+ * <?php
+ * $contents = [];
+ * $contents['cover']['greeting'] = "Hello world";
+ * $contents['cover']['getstarted'] = "Get Started";
+ * return $contents;
+ */
+```
+## GetFromExcel
+```php
+use Pointdeb\Translator\Translation;
+
+$excel = '/path/to/your.xlsx';
+$result = Translation::getFromExcel($excel);
+
+/**
+ * [
+ *      'key' => [
+ *          'en' => 'value',
+ *          'fr' => 'valeur'            
+ *      ]
+ * ] 
+ * 
+*/
+```
+
+## SaveToFileFromExcel (merge of GetFromExcel and SaveToFile)
+```php
+use Pointdeb\Translator\Translation;
+
+$outputPath = '/your/path/';
+$excel = '/path/to/your.xlsx';
+
+$result = Translation::saveToFileFromExcel($excel, $outputPath);
 
 // result /your/path/en/home.php 
 /** 
