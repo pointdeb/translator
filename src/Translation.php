@@ -8,7 +8,7 @@ class Translation
 {
 
     /**
-     * Create dynamic translation files for laravel framework
+     * Create dynamic translation file generator for laravel framework
      * @param string $key key.key2.key3.key4
      * @param array $translations ['en' => 'value', 'fr' => 'valeur']
      * @param $resourcePath

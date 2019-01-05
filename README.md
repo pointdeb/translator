@@ -1,6 +1,6 @@
 # Translator
 
-Translator is a dynamic translation file generation for laravel framework based on key and values;
+Translator is a dynamic translation file generator for laravel framework based on key and values;
 
 # Installation
 ```shell
