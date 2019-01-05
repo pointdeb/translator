@@ -1,4 +1,4 @@
 *
 !.gitignore
-output
-models
+!output
+!models
