@@ -1,0 +1,16 @@
+{
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Pointdeb\\Translator\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Pointdeb\\Tests\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.5"
+  }
+}
