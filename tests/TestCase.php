@@ -15,4 +15,16 @@ abstract class TestCase extends BaseTestCase
         return realpath($realPaht);
       }
     }
+
+    public function clearOutput()
+    {
+        $dirs = glob($this->target('output') . '/**');
+
+        foreach ($dirs as $key => $value) {
+            if (is_dir($value)) {
+                // rmdir($value);
+                exec("rm -rfv $value");
+            }
+        }
+    }
 }

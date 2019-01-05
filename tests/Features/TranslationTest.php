@@ -6,7 +6,13 @@ use Pointdeb\Tests\TestCase;
 
 use Pointdeb\Translator\Translation;
 
-class TranslationTest extends TestCase {
+class TranslationTest extends TestCase
+{
+
+    public function setup()
+    {
+        $this->clearOutput();
+    }
 
     public function testSaveToFile()
     {
@@ -16,10 +22,17 @@ class TranslationTest extends TestCase {
                 "fr" => "Salut les gens",
                 "mg" => "Salama tompoko"
             ],
+
             "home.cover.getstarted" => [
                 "en" => "Get Started",
                 "fr" => "Commencer",
                 "mg" => "Manomboka"
+            ],
+
+            "about.contact" => [
+                "en" => "Contact",
+                "fr" => "Contacter",
+                "mg" => "Hifandray"
             ],
 
             "about.contact.phone" => [
@@ -27,6 +40,7 @@ class TranslationTest extends TestCase {
                 "fr" => "Telephone",
                 "mg" => "Finday"
             ],
+
             "about.contact.email" => [
                 "en" => "Email",
                 "fr" => "Email",
@@ -34,11 +48,13 @@ class TranslationTest extends TestCase {
             ],
         ];
 
-        foreach($datas as $key => $data) {
-            $result = Translation::saveToFile($key, $data);
+        $outputPath = $this->target('output');
+
+        foreach ($datas as $key => $data) {
+            $result = Translation::saveToFile($key, $data, $outputPath);
+            $this->assertTrue($result);
         }
 
-        $outputPath = $this->target('output');
 
         $this->assertTrue(is_file("$outputPath/en/home.php"));
         $this->assertTrue(is_file("$outputPath/fr/home.php"));
@@ -47,6 +63,25 @@ class TranslationTest extends TestCase {
         $this->assertTrue(is_file("$outputPath/en/about.php"));
         $this->assertTrue(is_file("$outputPath/fr/about.php"));
         $this->assertTrue(is_file("$outputPath/mg/about.php"));
+
+        $values = require_once("$outputPath/en/home.php");
+        $this->assertTrue(is_array($values), json_encode($values));
+        $this->assertTrue(key_exists('cover', $values), json_encode($values));
+        $this->assertTrue(key_exists('greeting', $values['cover']), json_encode($values['cover']));
+        $this->assertTrue($values['cover']['greeting'] == "Hello world", json_encode($values['cover']['greeting']));
+
+        $values = require_once("$outputPath/fr/home.php");
+        $this->assertTrue(is_array($values), json_encode($values));
+        $this->assertTrue(key_exists('cover', $values), json_encode($values));
+        $this->assertTrue(key_exists('greeting', $values['cover']), json_encode($values['cover']));
+        $this->assertTrue($values['cover']['greeting'] == "Salut les gens", json_encode($values['cover']['greeting']));
+
+
+        $values = require_once("$outputPath/mg/home.php");
+        $this->assertTrue(is_array($values), json_encode($values));
+        $this->assertTrue(key_exists('cover', $values), json_encode($values));
+        $this->assertTrue(key_exists('greeting', $values['cover']), json_encode($values['cover']));
+        $this->assertTrue($values['cover']['greeting'] == "Salama tompoko", json_encode($values['cover']['greeting']));
     }
 
 }
