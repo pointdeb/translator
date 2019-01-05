@@ -2,7 +2,6 @@
 
 namespace Pointdeb\Translator;
 
-use Throwable;
 use Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -60,6 +59,7 @@ class Translation
      * Create an array of translation as key and values from excel
      * @param string $excelPath
      * @return array
+     * @throws Exception
      */
     public static function getFromExcel(string $excelPath): array
     {
@@ -82,8 +82,8 @@ class Translation
         $headers = [];
         $header = $sheet->getCellByColumnAndRow($headerColumnStart, $headerRowStart)->getValue();
 
-        while(!empty($header)) {
-            $headers[$headerColumnStart . '-' .$headerRowStart] =  $header;
+        while (!empty($header)) {
+            $headers[$headerColumnStart . '-' . $headerRowStart] = $header;
             $headerColumnStart++;
             $header = $sheet->getCellByColumnAndRow($headerColumnStart, $headerRowStart)->getValue();
         }
@@ -93,7 +93,7 @@ class Translation
         $keyColumnStart = 1;
         $key = $sheet->getCellByColumnAndRow($keyColumnStart, $keyRowStart)->getValue();
 
-        while(!empty($key)) {
+        while (!empty($key)) {
 
             $valueColumnStart = 2;
             $valueRowStart = $keyRowStart;
@@ -102,8 +102,8 @@ class Translation
 
             $value = $sheet->getCellByColumnAndRow($valueColumnStart, $valueRowStart)->getValue();
 
-            while(!empty($value)) {
-                $lang = $headers[$valueColumnStart . '-' .$headerRowStart];
+            while (!empty($value)) {
+                $lang = $headers[$valueColumnStart . '-' . $headerRowStart];
                 $values[$lang] = $value;
                 $valueColumnStart++;
                 $value = $sheet->getCellByColumnAndRow($valueColumnStart, $valueRowStart)->getValue();
